@@ -1,0 +1,99 @@
+---
+output: html_document
+---
+
+### `r emojifont::emoji("jack_o_lantern")` ggplot2 + plotly `r emojifont::emoji("jack_o_lantern")`
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+1. `r emo::ji("japanese_goblin")` Cargamos los paquetes
+
+```{r}
+library(tidyverse)
+library(plotly)
+library(emo)
+```
+
+2. `r emo::ji("ghost")` leemos los datos
+
+```{r}
+movies <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018/2018-10-23/movie_profit.csv')
+```
+
+3. `r emo::ji("Dracula")` Limpiamos los datos
+
+```{r}
+# creamos una tabla que contenga únicamente las películas de terror con
+# ganancia y presupuesto positivos
+# creamos además una variable de año en que se estrenó
+movies_horror <- movies %>%
+  filter(genre == "Horror", worldwide_gross > 0, production_budget > 0) %>%
+  mutate(year = as.numeric(str_sub(release_date, start = -1L - 3, end = -1L)))
+```
+
+
+4. `r emo::ji("imp")` Primero un ggplot2
+
+```{r}
+gg_horror <- ggplot(movies_horror, aes(x = production_budget,
+                          y = worldwide_gross, color = year)) +
+  geom_point() +
+  theme_minimal() +
+  scale_x_log10() +
+  scale_y_log10() +
+  facet_wrap(~ mpaa_rating)
+gg_horror
+```
+
+5. `r emo::ji("witch")` plotly! creamos un gráfico interactivo con la función ggplotly
+
+```{r}
+ggplotly(gg_horror)
+```
+
+6. `r emo::ji("japanese_ogre")` Halloween? usaremos el paquete emojifont para incluir emojis en los datos
+
+```{r, eval = FALSE}
+# Creamos una columna de emojis con el paquete emojifont!
+movies_horror <- movies_horror %>% 
+  mutate(emoji = case_when(
+    mpaa_rating == "PG" ~ emoji("jack_o_lantern"),
+    mpaa_rating == "PG-13" ~ emoji("ghost"),
+    mpaa_rating == "R" ~ emoji("skull"),
+    TRUE ~ emoji("imp")
+  ))
+glimpse(movies_horror)
+```
+
+```{r}
+# Creamos una columna de emojis con el paquete emojifont!
+movies_horror <- movies_horror %>% 
+  mutate(figure = case_when(
+    mpaa_rating == "PG" ~ "jack_o_lantern",
+    mpaa_rating == "PG-13" ~ "ghost",
+    mpaa_rating == "R" ~ "skull",
+    TRUE ~ "imp"),
+    emoji = map_chr(figure, emo::ji))
+glimpse(movies_horror)
+```
+
+7. `r emo::ji("skull")` usamos ggplotly eligiendo que información queremos desplegar
+
+```{r}
+gg_horror_emo <- ggplot(movies_horror, aes(text = emoji, 
+                                           x = production_budget, 
+                                           y = worldwide_gross, color = year, 
+                                           label = movie)) +
+  geom_point() +
+  theme_minimal() +
+  scale_x_log10() +
+  scale_y_log10() +
+  facet_wrap(~ mpaa_rating)
+
+ggplotly(gg_horror_emo, tooltip = c("emoji", "movie", "year"))
+```
+
+
+
