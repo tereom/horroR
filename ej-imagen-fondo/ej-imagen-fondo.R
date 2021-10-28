@@ -34,8 +34,7 @@ ggplot(ranking, aes(x = disfraz, y = n)) +
     # aquí ponemos la imagen de fondo
     annotation_custom(grid::rasterGrob(img,
                                        width = unit(1,"npc"),
-                                       height = unit(1,"npc")),
-                      -Inf, Inf, -Inf, Inf) +
+                                       height = unit(1,"npc"))) +
     geom_bar(stat="identity", fill = "black",
              position = "dodge", width = .7, alpha = 0.8) +
     theme(axis.text.x = element_text(angle = 90, hjust = 1))
