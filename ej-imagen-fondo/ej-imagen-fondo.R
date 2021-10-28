@@ -27,7 +27,9 @@ writePNG(img)
 
 # creamos el gráfico
 ggplot(ranking, aes(x = disfraz, y = n)) +
-    ggtitle("Top 5 de disfraces en Estados Unidos") +
+    labs(title = "Top 5 de disfraces por estados en USA",
+         subtitle = 'Año: 2017',
+         y = 'número de estados') +
     scale_fill_continuous(guide = FALSE) +
     # aquí ponemos la imagen de fondo
     annotation_custom(grid::rasterGrob(img,
