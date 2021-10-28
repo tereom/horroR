@@ -2,13 +2,16 @@
 output: html_document
 ---
 
-### `r emojifont::emoji("jack_o_lantern")` ggplot2 + plotly `r emojifont::emoji("jack_o_lantern")`
+## `r emo::ji("jack_o_lantern")` ggplot2 + plotly `r emojifont::emoji("jack_o_lantern")`
+
+Mostramos como usar plotly a partir de una gráfica de ggplot2, además veremos 
+como agregar emojis con el paquete emo `r emo::ji("supervillain")`
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
-1. `r emo::ji("japanese_goblin")` Cargamos los paquetes
+1. `r emo::ji("zombie")` Cargamos los paquetes
 
 ```{r}
 library(tidyverse)
@@ -16,7 +19,7 @@ library(plotly)
 library(emo)
 ```
 
-2. `r emo::ji("ghost")` leemos los datos
+2. `r emo::ji("ghost")` Leemos los datos
 
 ```{r}
 movies <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018/2018-10-23/movie_profit.csv')
@@ -47,13 +50,13 @@ gg_horror <- ggplot(movies_horror, aes(x = production_budget,
 gg_horror
 ```
 
-5. `r emo::ji("witch")` plotly! creamos un gráfico interactivo con la función ggplotly
+5. `r emo::ji("mage")` plotly! creamos un gráfico interactivo con la función ggplotly
 
 ```{r}
 ggplotly(gg_horror)
 ```
 
-6. `r emo::ji("japanese_ogre")` Halloween? usaremos el paquete emojifont para incluir emojis en los datos
+6. `r emo::ji("japanese_ogre")` Halloween? usaremos el paquete `emo` para incluir emojis en los datos
 
 ```{r, eval = FALSE}
 # Creamos una columna de emojis con el paquete emojifont!
