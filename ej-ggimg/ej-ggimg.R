@@ -12,7 +12,8 @@ head(movies)
 movies_horror_top <- movies %>%
     filter(genre == "Horror", worldwide_gross > 0,
            production_budget > 0) %>% 
-    mutate(ganancia = worldwide_gross - production_budget) %>% 
+    mutate(ganancia = worldwide_gross - production_budget,
+           release_date = as.Date(release_date, '%m/%d/%Y')) %>% 
     arrange(desc(ganancia)) %>% 
     head(7)
 
