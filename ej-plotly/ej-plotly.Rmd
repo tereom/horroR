@@ -58,18 +58,6 @@ ggplotly(gg_horror)
 
 6. `r emo::ji("japanese_ogre")` Halloween? usaremos el paquete `emo` para incluir emojis en los datos
 
-```{r, eval = FALSE}
-# Creamos una columna de emojis con el paquete emojifont!
-movies_horror <- movies_horror %>% 
-  mutate(emoji = case_when(
-    mpaa_rating == "PG" ~ emoji("jack_o_lantern"),
-    mpaa_rating == "PG-13" ~ emoji("ghost"),
-    mpaa_rating == "R" ~ emoji("skull"),
-    TRUE ~ emoji("imp")
-  ))
-glimpse(movies_horror)
-```
-
 ```{r}
 # Creamos una columna de emojis con el paquete emojifont!
 movies_horror <- movies_horror %>% 
